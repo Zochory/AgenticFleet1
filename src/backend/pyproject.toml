@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentic-fleet"
+version = "0.4.0"
+description = "Fleet management application"
+authors = [
+  {name = "Zachary BENSALEM", email = "contact@zachary.ai"}
+]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+dependencies = [
+  # Core Framework
+  "fastapi>=0.109.0",
+  "uvicorn>=0.24.0",
+  "python-dotenv>=1.0.1",
+  "aiofiles>=23.1.0,<24.0.0",
+  "requests>=2.32.3",
+  "pydantic-settings>=2.2.1",
+
+  # AI & Machine Learning Stack
+  "agentops>=0.3.21",
+  "autogen-agentchat==0.4.0.dev13",
+  "autogen-core==0.4.0.dev13",
+  "autogen-ext[magentic-one,openai,azure]==0.4.0.dev13",
+  "composio-core>=0.6.11.post1",
+
+  # Azure Cloud Integration
+  "azure-core>=1.32.0",
+  "azure-identity>=1.19.0",
+  "azure-keyvault-secrets>=4.9.0",
+  "azure-search-documents<=11.6.0b8",
+  "azure-storage-blob>=12.24.0",
+  "azure-cosmos>=4.9.0",
+
+  # Data Science & Analytics
+  "matplotlib>=3.10.0",
+  "numpy>=1.26,<2.0",
+  "pandas>=2.2.3",
+  "pytz>=2024.2",
+  "yfinance>=0.2.51",
+  "jsonlines>=4.0.0",
+
+  # Web Services & Utilities
+  "bing>=0.31",
+  "markitdown>=0.0.1a3",
+  "beautifulsoup4>=4.12.0",  # Updated from bs4 which is just a reference package
+  "playwright>=1.49.1",
+  "tenacity>=9.0.0",
+  "opentelemetry-instrumentation-fastapi>=0.44b0",
+  "chainlit==2.0.0",
+  "docker>=7.1.0"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["agentic-fleet"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
