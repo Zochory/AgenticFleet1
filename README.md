@@ -1,6 +1,29 @@
 # AgenticFleet
+<div align="left">
+<a href="https://pypi.org/project/agentic-fleet/">
+   <img alt="Pepy Total Downlods" src="https://img.shields.io/pepy/dt/agentic-fleet">
+   </a>
+   <img alt="GitHub License" src="https://img.shields.io/github/license/qredence/agentic-fleet">
+   <img alt="GitHub forks" src="https://img.shields.io/github/forks/qredence/agentic-fleet">
+   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qredence/agentic-fleet">
 
-AgenticFleet is a powerful AI assistant application that uses Chainlit for the frontend interface and FastAPI for the backend, featuring real-time communication and advanced AI capabilities.
+</div>
+
+
+
+
+
+## Roadmap
+
+- [ ] Provide a FleetUI Design Kit and a quicker way of starting GraphFleet locally.
+- [ ] Provide a Toddle interface ready to use for GraphFleet
+- [ ] Add integrations of Composio
+- [ ] Add integrations of LangSmith
+- [ ] Add few selfhosting  one click deploy solutions.
+- [ ] Access GraphFleet through a secure and enterprise-ready Azure Cloud hosting version.
+- [ ] And way more... 👀
+
+AgenticFleet is an Adaptative Agentic System in beta that currently  uses Chainlit for the frontend interface and FastAPI for the backend, based on the ground work of Autogen & Magentic-One
 
 ## Features
 
@@ -152,6 +175,21 @@ Please ensure your PR:
 - [ ] Implement user authentication
 - [ ] Add file sharing capabilities
 - [ ] Enhance UI/UX with more interactive features
+
+
+## Citation
+
+@misc{fourney2024magenticonegeneralistmultiagentsolving,
+      title={Magentic-One: A Generalist Multi-Agent System for Solving Complex Tasks},
+      author={Adam Fourney and Gagan Bansal and Hussein Mozannar and Cheng Tan and Eduardo Salinas and Erkang and Zhu and Friederike Niedtner and Grace Proebsting and Griffin Bassman and Jack Gerrits and Jacob Alber and Peter Chang and Ricky Loynd and Robert West and Victor Dibia and Ahmed Awadallah and Ece Kamar and Rafah Hosn and Saleema Amershi},
+      year={2024},
+      eprint={2411.04468},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2411.04468},
+}
+
+[Autogen](https://microsoft.github.io/autogen/0.4.0.dev13/index.html) 
 
 ## License
 
