@@ -37,8 +37,8 @@ AgenticFleet is an Adaptative Agentic System in beta that currently  uses Chainl
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/fleet.git
-cd fleet
+git clone https://github.com/qredence/agenticfleet.git
+cd agenticfleet
 ```
 
 2. Create and activate a virtual environment using uv:
@@ -77,12 +77,12 @@ To start the application in development mode:
 ```bash
 cd src/backend
 . .venv/bin/activate  # Ensure you're in the virtual environment
-chainlit run agentic-fleet.frontend.app
+chainlit run agentic-fleet/frontend/app.py
 ```
 
 This will:
 - Start the backend server at http://localhost:8000
-- Launch the Chainlit frontend interface
+- Launch the Chainlit frontend interface http://localhost:8001
 - Enable real-time communication
 - Provide colored logging output
 - Handle graceful shutdown
