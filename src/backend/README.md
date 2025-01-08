@@ -193,3 +193,7 @@ Errors are handled at multiple levels:
    - Use custom exceptions
    - Provide clear error messages
    - Implement proper fallbacks
+
+## License
+
+This project is licensed under the Apache 2.0 License.

@@ -188,4 +188,4 @@ Please ensure your PR:
 
 ## License
 
-This project is 
+This project is licensed under the Apache 2.0 License.
