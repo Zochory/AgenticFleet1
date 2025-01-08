@@ -13,15 +13,7 @@
 
 
 
-## Roadmap
 
-- [ ] Provide a FleetUI Design Kit and a quicker way of starting GraphFleet locally.
-- [ ] Provide a Toddle interface ready to use for GraphFleet
-- [ ] Add integrations of Composio
-- [ ] Add integrations of LangSmith
-- [ ] Add few selfhosting  one click deploy solutions.
-- [ ] Access GraphFleet through a secure and enterprise-ready Azure Cloud hosting version.
-- [ ] And way more... 👀
 
 AgenticFleet is an Adaptative Agentic System in beta that currently  uses Chainlit for the frontend interface and FastAPI for the backend, based on the ground work of Autogen & Magentic-One
 
@@ -126,6 +118,24 @@ fleet/
 └── README.md
 ```
 
+
+## Roadmap
+
+- [ ] Add Composio Agent
+- [x] Add Multi-modal Surfer agent
+- [ ] Improve backend main Agentic AI (based on Autogen and Magentic-One)
+- [ ] Add a pool of LLM model auto-select for each agent
+- [ ] Improve the generalist multi-tasking agentic fleet
+- [ ] Add a Cloud service with OAuth + Freetier
+- [ ] Add pre-release of AgenticFabric
+- [ ] Release of the GraphFleet refactor
+- [ ] Fix interoperability between AgenticFleet and GraphFleet
+- [ ] Add message persistence
+- [ ] Implement user authentication
+- [ ] Add file sharing capabilities
+- [ ] Enhance UI/UX with more interactive features
+
+
 ## Error Handling
 
 The application implements comprehensive error handling:
@@ -160,21 +170,6 @@ Please ensure your PR:
 - Includes proper error handling
 - Has meaningful commit messages
 
-## Roadmap
-
-- [x] Add Composio Agent
-- [x] Add Multi-modal Surfer agent
-- [ ] Improve backend main Agentic AI (based on Autogen and Magentic-One)
-- [ ] Add a pool of LLM model auto-select for each agent
-- [ ] Improve the generalist multi-tasking agentic fleet
-- [ ] Add a Cloud service with OAuth + Freetier
-- [ ] Add pre-release of AgenticFabric
-- [ ] Release of the GraphFleet refactor
-- [ ] Fix interoperability between AgenticFleet and GraphFleet
-- [ ] Add message persistence
-- [ ] Implement user authentication
-- [ ] Add file sharing capabilities
-- [ ] Enhance UI/UX with more interactive features
 
 
 ## Citation
