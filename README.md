@@ -3,9 +3,9 @@
 <a href="https://pypi.org/project/agentic-fleet/">
    <img alt="Pepy Total Downlods" src="https://img.shields.io/pepy/dt/agentic-fleet">
    </a>
-   <img alt="GitHub License" src="https://img.shields.io/github/license/qredence/agentic-fleet">
-   <img alt="GitHub forks" src="https://img.shields.io/github/forks/qredence/agentic-fleet">
-   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qredence/agentic-fleet">
+   <img alt="GitHub License" src="https://img.shields.io/github/license/qredence/agenticfleet">
+   <img alt="GitHub forks" src="https://img.shields.io/github/forks/qredence/agenticfleet">
+   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qredence/agenticfleet">
 
 </div>
 
