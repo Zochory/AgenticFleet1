@@ -1,4 +1,5 @@
 # AgenticFleet
+
 <div align="left">
 <a href="https://pypi.org/project/agentic-fleet/">
    <img alt="Pepy Total Downlods" src="https://img.shields.io/pepy/dt/agentic-fleet">
@@ -9,8 +10,15 @@
 
 </div>
 
+[Join the discord
+](https://discord.gg/ebgy7gtZHK)
 
+[Follow AgenticFleet on Twitter](https://x.com/agenticfleet) to stay updated and announcement, coming heavily just a matter of polish for the set of underlying solutions coming !
 
+[Join the Early Access Waitlist](https://www.qredence.ai/)
+
+> [!CAUTION]
+> In early beta, expect changes, more detail soon, expect for AgenticFleet approximatly  3-4 git push/week minimum.
 
 
 
@@ -19,9 +27,9 @@ AgenticFleet is an Adaptative Agentic System in beta that currently  uses Chainl
 
 ## Features
 
-- Interactive Chainlit-based chat interface with real-time updates
+- Interactive Chainlit 2.0 chat interface 
 - FastAPI backend with structured logging and WebSocket support
-- Multi-agent system with specialized agents (Composio, Multi-modal Surfer)
+- General Multi-tasking Agentic System based on Magentic-One
 - Advanced prompt engineering with PromptFleet templates
 - Dataset and prompt fabric tools for AI training
 - Comprehensive error handling and connection management
