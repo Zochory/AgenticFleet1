@@ -8,7 +8,10 @@
    <img alt="GitHub forks" src="https://img.shields.io/github/forks/qredence/agenticfleet">
    <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qredence/agenticfleet">
 
+
 </div>
+
+   [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cf5bcfbdbf50493b9b5de381c24dc147)](https://app.codacy.com/gh/Qredence/AgenticFleet/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 [Join the discord
 ](https://discord.gg/ebgy7gtZHK)
@@ -24,6 +27,12 @@
 
 
 AgenticFleet is an Adaptative Agentic System in beta that currently  uses Chainlit for the frontend interface and FastAPI for the backend, based on the ground work of Autogen & Magentic-One
+[Join the discord
+](https://discord.gg/ebgy7gtZHK)
+
+[Follow AgenticFleet on Twitter](https://x.com/agenticfleet) to stay updated and announcement, coming heavily just a matter of polish for the set of underlying solutions coming !
+
+[Join the Early Access Waitlist](https://www.qredence.ai/)
 
 ## Features
 
@@ -35,6 +44,23 @@ AgenticFleet is an Adaptative Agentic System in beta that currently  uses Chainl
 - Comprehensive error handling and connection management
 - Environment-based configuration
 - Extensible architecture for future enhancements
+
+
+## Roadmap
+
+- [ ] Add Composio Agent
+- [x] Add Multi-modal Surfer agent
+- [ ] Improve backend main Agentic AI (based on Autogen and Magentic-One)
+- [ ] Add a pool of LLM model auto-select for each agent
+- [ ] Improve the generalist multi-tasking agentic fleet
+- [ ] Add a Cloud service with OAuth + Freetier
+- [ ] Add pre-release of AgenticFabric
+- [ ] Release of the GraphFleet refactor
+- [ ] Fix interoperability between AgenticFleet and GraphFleet
+- [ ] Add message persistence
+- [ ] Implement user authentication
+- [ ] Add file sharing capabilities
+- [ ] Enhance UI/UX with more interactive features
 
 ## Prerequisites
 
@@ -126,22 +152,6 @@ fleet/
 └── README.md
 ```
 
-
-## Roadmap
-
-- [ ] Add Composio Agent
-- [x] Add Multi-modal Surfer agent
-- [ ] Improve backend main Agentic AI (based on Autogen and Magentic-One)
-- [ ] Add a pool of LLM model auto-select for each agent
-- [ ] Improve the generalist multi-tasking agentic fleet
-- [ ] Add a Cloud service with OAuth + Freetier
-- [ ] Add pre-release of AgenticFabric
-- [ ] Release of the GraphFleet refactor
-- [ ] Fix interoperability between AgenticFleet and GraphFleet
-- [ ] Add message persistence
-- [ ] Implement user authentication
-- [ ] Add file sharing capabilities
-- [ ] Enhance UI/UX with more interactive features
 
 
 ## Error Handling
