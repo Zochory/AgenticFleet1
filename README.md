@@ -13,8 +13,8 @@
 
 AgenticFleet is an Adaptative Agentic System that leverages Chainlit for the frontend interface and FastAPI for the backend, built on the foundation of Autogen & Magentic-One.
 
-> [!CAUTION]
-> This project is in early beta. Expect frequent updates (3-4 git pushes/week minimum) and breaking changes as we continue to enhance and stabilize the system.
+![image](https://github.com/user-attachments/assets/2de0ec9d-d9f5-4003-9cdc-45128f0fb909)
+
 
 ## Quick Links
 - [Join our Discord Community](https://discord.gg/ebgy7gtZHK)
@@ -32,7 +32,7 @@ AgenticFleet is an Adaptative Agentic System that leverages Chainlit for the fro
 - Environment-based configuration
 - Extensible architecture for future enhancements
 
-## Roadmap
+## Roadmap (short-term)
 
 - [ ] Add Composio Agent
 - [x] Add Multi-modal Surfer agent
