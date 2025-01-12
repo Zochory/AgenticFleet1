@@ -1,32 +1,89 @@
-from typing import Dict, Any, Optional, AsyncIterator, List
+# Standard library imports
+import asyncio
+import json
+import time
+from contextlib import asynccontextmanager
+from typing import Optional, Dict, Any, List, AsyncGenerator
+import logging
+import os
+from pydantic import BaseSettings, ValidationError, SecretStr, BaseModel, constr
+
+# FastAPI imports
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from fastapi.responses import StreamingResponse
+
+# AutoGen core imports
+from autogen_core import AgentId, AgentProxy, DefaultTopicId, Image
+from autogen_core import SingleThreadedAgentRuntime
+from autogen_core.models import RequestUsage
+
+# AutoGen agent chat imports
+from autogen_agentchat.agents import CodeExecutorAgent, AssistantAgent
+from autogen_agentchat.base import TaskResult
 from autogen_agentchat.messages import (
     AgentEvent,
     ChatMessage,
-    MultiModalMessage
+    MultiModalMessage,
+    TextMessage,
+    ToolCallExecutionEvent,
+    ToolCallRequestEvent
 )
-from autogen_core import Image
-from autogen_core.models import RequestUsage
-import json
-import asyncio
-import time
+from autogen_agentchat.teams import MagenticOneGroupChat
+from autogen_agentchat.ui import Console
 
+# AutoGen extension imports
+from autogen_ext.agents.file_surfer import FileSurfer
+from autogen_ext.agents.magentic_one import MagenticOneCoderAgent
+from autogen_ext.agents.web_surfer import MultimodalWebSurfer
+from autogen_ext.code_executors.azure import ACADynamicSessionsCodeExecutor
+from autogen_ext.code_executors.docker import DockerCommandLineCodeExecutor
+from autogen_ext.code_executors.local import LocalCommandLineCodeExecutor
+from autogen_ext.models.openai import AzureOpenAIChatCompletionClient
+
+# Local imports
+from models.logging import SystemLogger, TeamLogger
 from magentic_one_helper import MagenticOneHelper
-from models.logging import team_logger, system_logger
 
-app = FastAPI(
-    title="AutoGen API",
-    description="API for running AutoGen agent teams",
-    version="0.1.0"
-)
+# Initialize loggers
+system_logger = SystemLogger(name="system")
+team_logger = TeamLogger(name="team")
 
 helper: Optional[MagenticOneHelper] = None
 team_agents: List[Any] = []  # Store agent list for health checks
 
+# Add structured logging with sensitive data redaction
+class SensitiveDataFilter(logging.Filter):
+    def filter(self, record):
+        if isinstance(record.msg, str):
+            record.msg = record.msg.replace(
+                os.getenv("AZURE_OPENAI_API_KEY", ""),
+                "[REDACTED]"
+            )
+        return True
 
-@app.on_event("startup")
-async def startup_event() -> None:
+logger = logging.getLogger(__name__)
+logger.addFilter(SensitiveDataFilter())
+
+# Add validation for required environment variables
+from pydantic import BaseSettings, ValidationError
+
+class Settings(BaseSettings):
+    AZURE_OPENAI_API_KEY: SecretStr
+    BING_API_KEY: SecretStr
+    APP_PORT: int = 8000
+    DEBUG: bool = False
+
+    class Config:
+        env_file = ".env"
+
+try:
+    settings = Settings()
+except ValidationError as e:
+    logger.error(f"Invalid environment variables: {e}")
+    raise
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     """
     Initialize the application on startup.
     Sets up a MagenticOneHelper instance and configures default agents.
@@ -39,9 +96,23 @@ async def startup_event() -> None:
 
         # Configure default agents
         default_agents = [
-            {"type": "MagenticOne", "name": "FileSurfer"},
-            {"type": "MagenticOne", "name": "WebSurfer"},
-            {"type": "MagenticOne", "name": "Coder"}
+            {
+                "type": "MagenticOne", 
+                "name": "Coder"
+            },
+            {
+                "type": "MagenticOne",
+                "name": "WebSurfer",
+                "capabilities": {
+                    "vision": True,
+                    "function_calling": True,
+                    "json_output": True
+                }
+            },
+            {
+                "type": "MagenticOne",
+                "name": "FileSurfer"
+            }
         ]
 
         await helper.initialize(default_agents)
@@ -59,6 +130,17 @@ async def startup_event() -> None:
             {"error": str(e)}
         )
         raise HTTPException(status_code=500, detail=str(e))
+    
+    yield
+    
+    # Cleanup code (if any) would go here
+
+app = FastAPI(
+    title="AutoGen API",
+    description="API for running AutoGen agent teams",
+    version="0.1.0",
+    lifespan=lifespan
+)
 
 
 @app.get("/health")
@@ -103,13 +185,16 @@ def _message_to_str(message: Any) -> str:
         return str(message)
 
 
-async def stream_output(task: str) -> AsyncIterator[str]:
+async def stream_output(task: str) -> AsyncGenerator[str, None]:
     """
     Stream the task execution output in real-time using an async generator.
     Yields SSE (Server-Sent Events) data chunks as JSON.
     """
     start_time = time.time()
     try:
+        if not task or len(task) > 1000:
+            raise ValueError("Invalid task length")
+            
         team_logger.log_task_start(task, [agent.name for agent in team_agents])
         total_usage = RequestUsage(prompt_tokens=0, completion_tokens=0)
 
@@ -186,24 +271,31 @@ async def stream_output(task: str) -> AsyncIterator[str]:
 
         team_logger.log_task_complete(task, True, summary)
 
+    except ValueError as e:
+        error_content = {
+            "type": "error",
+            "source": "system",
+            "content": f"Validation error: {str(e)}",
+            "timestamp": time.time() - start_time
+        }
+        yield f"data: {json.dumps(error_content)}\n\n"
     except Exception as e:
         error_content = {
             "type": "error",
             "source": "system",
-            "content": f"Error during streaming: {str(e)}",
+            "content": f"Unexpected error: {str(e)}",
             "timestamp": time.time() - start_time
         }
-        team_logger.error(
-            "stream_error",
-            "Error during streaming",
-            {"task": task, "error": str(e)}
-        )
         yield f"data: {json.dumps(error_content)}\n\n"
-        team_logger.log_task_complete(task, False, {"error": str(e)})
 
+
+from pydantic import BaseModel, constr
+
+class TaskRequest(BaseModel):
+    task: constr(min_length=1, max_length=1000)
 
 @app.get("/stream_task")
-async def stream_task(task: str) -> StreamingResponse:
+async def stream_task(task: TaskRequest) -> StreamingResponse:
     """
     Endpoint to stream task execution in real-time using Server-Sent Events.
 
@@ -222,7 +314,7 @@ async def stream_task(task: str) -> StreamingResponse:
         raise HTTPException(status_code=503, detail="Team not initialized")
 
     return StreamingResponse(
-        stream_output(task),
+        stream_output(task.task),
         media_type="text/event-stream"
     )
 

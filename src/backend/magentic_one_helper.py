@@ -98,10 +98,21 @@ class MagenticOneHelper:
             api_version=api_version,
             azure_endpoint=azure_endpoint,
             azure_api_key=api_key,
-            model_info={
+            capabilities={
                 "vision": True,
                 "function_calling": True,
-                "json_output": True,
+                "json_output": True
+            },
+            model_info={
+                "name": model,
+                "version": "2024-11-20",
+                "context_window": 128000,
+                "max_tokens": 4096,
+                "supports": {
+                    "vision": True,
+                    "function_calling": True,
+                    "json_output": True
+                }
             }
         )
 
@@ -165,7 +176,11 @@ class MagenticOneHelper:
                     print("Executor added!")
 
                 elif agent_type == "MagenticOne" and agent_name == "WebSurfer":
-                    web_surfer = MultimodalWebSurfer("WebSurfer", model_client=client)
+                    web_surfer = MultimodalWebSurfer(
+                        "WebSurfer", 
+                        model_client=client,
+                        vision=True
+                    )
                     agent_list.append(web_surfer)
                     print("WebSurfer added!")
 
@@ -202,40 +217,34 @@ class MagenticOneHelper:
         )
         
         async for event in team.run_stream(task=task):
-            if isinstance(event, (ChatMessage, MultiModalMessage, AgentEvent)):
-                source = getattr(event, 'source', 'system')
-                content = str(event.content) if hasattr(event, 'content') else str(event)
-                
-                # Determine event type based on content and source
-                event_type = "thought" if "REASONING" in content or "PLAN" in content else "message"
-                
-                # Format code blocks if present
-                if "```" in content:
-                    content = content.replace("```python", "```").replace("```bash", "```")
-                
-                # Create event output
-                output = {
-                    "type": event_type,
-                    "source": source,
-                    "content": content,
-                }
-                
-                # Add token usage if available
-                if hasattr(event, 'models_usage') and event.models_usage:
-                    output["models_usage"] = event.models_usage._asdict()
-                
-                yield output
-            else:
-                # Handle system messages and other events
-                content = str(event)
-                event_type = (
-                    "plan" if "plan" in content.lower() 
-                    else "thought" if "thinking" in content.lower() 
-                    else "message"
-                )
-                
+            try:
+                # Handle different message types
+                if isinstance(event, (BaseMessage, AgentEvent)):
+                    source = getattr(event, 'source', 'system')
+                    content = str(event.content) if hasattr(event, 'content') else str(event)
+                    
+                    # Create event output
+                    output: Dict[str, Any] = {
+                        "type": "message",
+                        "source": source,
+                        "content": content,
+                    }
+                    
+                    # Add token usage if available
+                    if hasattr(event, 'models_usage') and event.models_usage:
+                        output["models_usage"] = event.models_usage._asdict()
+                    
+                    yield output
+                else:
+                    # Handle system messages and other events
+                    yield {
+                        "type": "message",
+                        "source": "system",
+                        "content": str(event)
+                    }
+            except Exception as e:
                 yield {
-                    "type": event_type,
+                    "type": "error",
                     "source": "system",
-                    "content": content
+                    "content": f"Error processing event: {str(e)}"
                 }
