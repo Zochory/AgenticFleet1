@@ -34,19 +34,34 @@ AgenticFleet is an Adaptative Agentic System that leverages Chainlit for the fro
 
 ## Roadmap (short-term)
 
-- [ ] Add Composio Agent
+Current Progress:
+- [x] Implement core multi-agent architecture
 - [x] Add Multi-modal Surfer agent
-- [ ] Improve backend main Agentic AI (based on Autogen and Magentic-One)
-- [ ] Add a pool of LLM model auto-select for each agent
-- [ ] Improve the generalist multi-tasking agentic fleet
-- [ ] Add a Cloud service with OAuth + Freetier
-- [ ] Add pre-release of AgenticFabric
-- [ ] Release of the GraphFleet refactor
-- [ ] Fix interoperability between AgenticFleet and GraphFleet
+- [x] Add FileSurfer agent
+- [x] Integrate Chainlit 2.0 frontend
+- [x] Add OAuth authentication support
+- [x] Implement real-time streaming responses
+- [x] Add CogCache integration
+
+Short-term Goals:
+- [ ] Add Composio Agent
+- [ ] Implement LLM model auto-selection
+- [ ] Enhance agent coordination
 - [ ] Add message persistence
-- [ ] Implement user authentication
-- [ ] Add file sharing capabilities
-- [ ] Enhance UI/UX with more interactive features
+- [ ] Improve file handling capabilities
+- [ ] Release AgenticFabric
+- [ ] Implement GraphFleet integration
+- [ ] Develop AI training tools
+
+Mid-term Goals:
+- [ ] Launch cloud service with OAuth + Freetier
+- [ ] Create comprehensive prompt engineering suite
+- [ ] Build enterprise deployment options
+- [ ] Establish agent marketplace
+- [ ] Enable cross-platform interoperability
+- [ ] Enhance UI/UX features
+- [ ] Implement advanced monitoring
+- [ ] Add automated error recovery
 
 ## Prerequisites
 
@@ -123,59 +138,45 @@ The `.env` file contains all necessary configuration for both backend and fronte
 
 ## Development
 
-To start the application in development mode, you'll need to run both the backend and frontend servers:
+To start the application in development mode:
 
-1. Start the backend server:
 ```bash
-cd src/backend
-. .venv/bin/activate  # Ensure you're in the virtual environment
-uvicorn app:app --reload --host 0.0.0.0 --port 8000
-```
+# Ensure you're in the virtual environment
+. .venv/bin/activate
 
-2. In a new terminal, start the frontend:
-```bash
-cd src/frontend
-. .venv/bin/activate  # Ensure you're in the virtual environment
-chainlit run app.py
+# Start the Chainlit application
+chainlit run src/app/app.py
 ```
 
 This will:
-- Start the backend server at http://localhost:8000
-- Launch the Chainlit frontend interface at http://localhost:8001
-- Enable real-time communication between frontend and backend
+- Launch the Chainlit interface at http://localhost:8001
+- Enable real-time agent communication
 - Provide colored logging output
 - Handle graceful shutdown
-
-You can access:
-- Backend API documentation at http://localhost:8000/docs
-- Frontend Chainlit interface at http://localhost:8001
 
 ## Project Structure
 
 ```
-fleet/
+agenticfleet/
 ├── src/
-│   ├── frontend/              # Chainlit Frontend
-│   │   ├── .chainlit/        # Chainlit configuration
-│   │   ├── __init__.py
-│   │   ├── app.py            # Frontend application
-│   │   └── chainlit.md       # Chainlit documentation
-│   └── backend/              # FastAPI Backend
-│       ├── agents/
-│       │   ├── composio_agent.py    # Composio agent implementation
-│       │   └── multi-modal-surfer.py # Multi-modal surfing agent
-│       ├── models/
-│       │   ├── config.py        # Configuration management
-│       │   ├── logging.py       # Structured logging
-│       │   ├── messages.py      # Message type definitions
-│       │   └── azure_client.py  # Azure services integration
-│       ├── labs/
-│       │   ├── dataset_fabric/  # Dataset generation tools
-│       │   ├── prompt_fabric/   # Prompt engineering tools
-│       │   └── promptfleet/     # Prompt templates
-│       └── app.py              # FastAPI application
-├── docs/                      # Documentation
-│   └── agentic-fleet.mdx     # Detailed technical documentation
+│   ├── app/                  # Main application directory
+│   │   ├── .chainlit/       # Chainlit configuration
+│   │   ├── models/          # Data models
+│   │   ├── public/          # Static assets and styling
+│   │   ├── app.py          # Main Chainlit application
+│   │   ├── _app.py         # Alternative implementation
+│   │   └── chainlit.md     # Welcome documentation
+│   └── backend/            # Backend components (legacy)
+│       ├── agents/         # Agent implementations
+│       ├── models/         # Backend models
+│       └── main.py         # FastAPI application
+├── docs/                   # Documentation
+│   ├── agentic-fleet.md   # Technical documentation
+│   └── useful-snippet.md  # Code snippets and examples
+├── labs/                  # Experimental features
+│   ├── promptfleet/      # Prompt templates
+│   ├── promptwizard/     # Prompt optimization
+│   └── trace/            # Debugging tools
 └── README.md
 ```
 

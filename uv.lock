@@ -9,10 +9,11 @@ resolution-markers = [
 
 [[package]]
 name = "agentic-fleet"
-version = "0.4.0"
+version = "0.4.12"
 source = { editable = "." }
 dependencies = [
     { name = "agentops" },
+    { name = "aioconsole" },
     { name = "aiofiles" },
     { name = "aiohttp" },
     { name = "asyncio" },
@@ -33,18 +34,21 @@ dependencies = [
     { name = "fastapi" },
     { name = "httpx" },
     { name = "jsonlines" },
+    { name = "magentic-one-cli" },
     { name = "markitdown" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "opentelemetry-instrumentation-fastapi" },
     { name = "pandas" },
     { name = "playwright" },
+    { name = "promptflow-tracing" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "python-dotenv" },
     { name = "python-multipart" },
     { name = "pytz" },
     { name = "requests" },
+    { name = "rich" },
     { name = "tenacity" },
     { name = "typing-extensions" },
     { name = "uvicorn" },
@@ -76,22 +80,25 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "agentops", specifier = ">=0.3.21" },
+    { name = "aioconsole", specifier = ">=0.8.1" },
     { name = "aiofiles", specifier = ">=23.1.0,<24.0.0" },
-    { name = "aiohttp", specifier = ">=3.9.1" },
+    { name = "aiohttp", specifier = "==3.11.11" },
     { name = "asyncio", specifier = ">=3.4.3" },
-    { name = "autogen-agentchat" },
-    { name = "autogen-core" },
-    { name = "autogen-ext", extras = ["azure", "docker", "magentic-one", "openai"] },
+    { name = "autogen-agentchat", specifier = "==0.4.0" },
+    { name = "autogen-core", specifier = "==0.4.0" },
+    { name = "autogen-ext", extras = ["docker"], specifier = "==0.4.0" },
+    { name = "autogen-ext", extras = ["magentic-one"], specifier = "==0.4.0" },
+    { name = "autogen-ext", extras = ["openai", "azure"], specifier = "==0.4.0" },
     { name = "azure-core", specifier = ">=1.32.0" },
     { name = "azure-cosmos", specifier = ">=4.9.0" },
     { name = "azure-identity", specifier = ">=1.19.0" },
     { name = "azure-keyvault-secrets", specifier = ">=4.9.0" },
-    { name = "azure-search-documents", specifier = "<=11.6.0b8" },
+    { name = "azure-search-documents", specifier = "==11.6.0b4" },
     { name = "azure-storage-blob", specifier = ">=12.24.0" },
     { name = "beautifulsoup4", specifier = ">=4.12.0" },
     { name = "bing", specifier = ">=0.31" },
     { name = "black", marker = "extra == 'dev'", specifier = ">=23.9.1" },
-    { name = "chainlit", specifier = "==2.0.1" },
+    { name = "chainlit", specifier = "==2.0.2" },
     { name = "composio-core", specifier = ">=0.6.11.post1" },
     { name = "coverage", marker = "extra == 'test'", specifier = ">=7.3.2" },
     { name = "docker", specifier = ">=7.1.0" },
@@ -100,14 +107,16 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.25.0" },
     { name = "isort", marker = "extra == 'dev'", specifier = ">=5.12.0" },
     { name = "jsonlines", specifier = ">=4.0.0" },
+    { name = "magentic-one-cli", specifier = "==0.2.0" },
     { name = "markitdown", specifier = ">=0.0.1a3" },
     { name = "matplotlib", specifier = ">=3.10.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.5.1" },
     { name = "numpy", specifier = ">=1.26,<2.0" },
     { name = "opentelemetry-instrumentation-fastapi", specifier = ">=0.44b0" },
     { name = "pandas", specifier = ">=2.2.3" },
-    { name = "playwright", specifier = ">=1.49.1" },
+    { name = "playwright", specifier = "==1.49.1" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=3.4.0" },
+    { name = "promptflow-tracing", specifier = "==1.17.1" },
     { name = "pydantic", specifier = ">=2.5.2" },
     { name = "pydantic-settings", specifier = ">=2.2.1" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=7.4.0" },
@@ -119,6 +128,7 @@ requires-dist = [
     { name = "python-multipart", specifier = ">=0.0.6" },
     { name = "pytz", specifier = ">=2024.2" },
     { name = "requests", specifier = ">=2.32.3" },
+    { name = "rich", specifier = ">=13.9.4" },
     { name = "sphinx", marker = "extra == 'docs'", specifier = ">=7.2.6" },
     { name = "sphinx-autodoc-typehints", marker = "extra == 'docs'", specifier = ">=1.24.0" },
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = ">=1.3.0" },
@@ -339,15 +349,6 @@ wheels = [
 ]
 
 [[package]]
-name = "asyncio-atexit"
-version = "1.0.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/22/d3/dd2974be3f67c7ec96e0d6ab454429d0372cb7c7bffa3d0ac67a483cb801/asyncio-atexit-1.0.1.tar.gz", hash = "sha256:1d0c71544b8ee2c484d322844ee72c0875dde6f250c0ed5b6993592ab9f7d436", size = 4373 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/65/10/d6abaefa57a52646651fd0383c056280b0853c0106229ece6bb38cd14463/asyncio_atexit-1.0.1-py3-none-any.whl", hash = "sha256:d93d5f7d5633a534abd521ce2896ed0fbe8de170bb1e65ec871d1c20eac9d376", size = 3752 },
-]
-
-[[package]]
 name = "attrs"
 version = "24.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -398,48 +399,44 @@ wheels = [
 
 [[package]]
 name = "autogen-agentchat"
-version = "0.4.0.dev13"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "aioconsole" },
     { name = "autogen-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/08/fcbb1773047ec3b000d4572247309b203dffb7a46ec7bc6b5804efb8d69a/autogen_agentchat-0.4.0.dev13.tar.gz", hash = "sha256:9c4f5166bef95748ea0f8c98c85ec7371878cd826846edd83e8c82afb04de837", size = 51413 }
+sdist = { url = "https://files.pythonhosted.org/packages/ea/89/f8bbf0d800a0d3ee2c0bf2f8cb363c6646d8a79e340bf750c99d6adf5340/autogen_agentchat-0.4.0.tar.gz", hash = "sha256:2442c1c3ef869f9029918562fd9a69964776e2bf43a7fbd6ee50145f0f61e897", size = 49425 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/71/ad/dae777700713535a7e8becec475d98074c00dad76aec13352b03322f385a/autogen_agentchat-0.4.0.dev13-py3-none-any.whl", hash = "sha256:612f1fd31de832f47bfdb86d419f72d2865846b35f11507407b2449b099e0566", size = 60391 },
+    { url = "https://files.pythonhosted.org/packages/24/34/c0d795703a9d01ca85a36e2d3d8e724a812be97d9a11d4e41b043819a2d6/autogen_agentchat-0.4.0-py3-none-any.whl", hash = "sha256:ad292f804b363844ce8cc1b4d10092eaea1a2fcd6fbdfece3a1eabf1843681d6", size = 57128 },
 ]
 
 [[package]]
 name = "autogen-core"
-version = "0.4.0.dev13"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "aioconsole" },
-    { name = "aiohttp" },
-    { name = "asyncio-atexit" },
     { name = "jsonref" },
-    { name = "openai" },
     { name = "opentelemetry-api" },
     { name = "pillow" },
     { name = "protobuf" },
     { name = "pydantic" },
-    { name = "tiktoken" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e3/fb/8133aebda2ae38d2cf518db7cf752567ec2bb89beea69678cfbe3ff356b1/autogen_core-0.4.0.dev13.tar.gz", hash = "sha256:693ed5dc314f93396b9adb239464812b42c467bcbf30adbba4c41d5bbe0c1dbb", size = 2311802 }
+sdist = { url = "https://files.pythonhosted.org/packages/9d/1f/737b6df5c4cddff9f71e2973ccb49da8252162f819af399bb6989264a698/autogen_core-0.4.0.tar.gz", hash = "sha256:1921294298aefa571a216ce6c5c35705dd46b67d8ba316b04385694e2e56a14e", size = 2286746 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d3/75/8472f6db7b964f02d5e270deffd80181b8bfd357dfbd6eb08bc3b8ee2210/autogen_core-0.4.0.dev13-py3-none-any.whl", hash = "sha256:4510fb522c1638efdbc8cbfa00f7832a08798797a659622f43cb9752fe2b47a6", size = 70461 },
+    { url = "https://files.pythonhosted.org/packages/d3/a6/70ba240264918d905b5748b165f2164e4b9453b4aa618648d2106cc8e400/autogen_core-0.4.0-py3-none-any.whl", hash = "sha256:9c8646beaab8ab3a8b9fd7e0cf472222772b04327f7d98328ada0b5ee71f9c61", size = 71327 },
 ]
 
 [[package]]
 name = "autogen-ext"
-version = "0.4.0.dev13"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "autogen-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f8/01/b8c63b605be1424e512e1824de2e0a29314bed0a4fc55a9d64804b46bf47/autogen_ext-0.4.0.dev13.tar.gz", hash = "sha256:f28bbd97111c26e2e25b7f793392d0c8a8aa5eab66217345edad8687816bca48", size = 101420 }
+sdist = { url = "https://files.pythonhosted.org/packages/9d/c1/c228fa9e23b1fdec710babc86f413413256892c7807b35fb09a4cb5ae535/autogen_ext-0.4.0.tar.gz", hash = "sha256:3ad871f540c0d155d7e717846835b49357b1cf0ae986309a4a7d4ead14f3a37c", size = 102759 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ba/c0/ccb0697da21402e4effaf15cca000705f2d64d5820961b05ad3f50d3c684/autogen_ext-0.4.0.dev13-py3-none-any.whl", hash = "sha256:bac589264b1e3b2d55ced5c10121e7009d8ba545d32f806ca85e70b3d298486e", size = 110368 },
+    { url = "https://files.pythonhosted.org/packages/c1/79/f75676363ba3c08a0fa2df7e1248d00a140df866fe35b6dbb1744b76cab4/autogen_ext-0.4.0-py3-none-any.whl", hash = "sha256:965c6c5c3345bfce6f1f396f6b9770bc308ca03e23fb8c91b4572f0c8f01a222", size = 110809 },
 ]
 
 [package.optional-dependencies]
@@ -459,6 +456,7 @@ magentic-one = [
 openai = [
     { name = "aiofiles" },
     { name = "openai" },
+    { name = "tiktoken" },
 ]
 
 [[package]]
@@ -529,17 +527,16 @@ wheels = [
 
 [[package]]
 name = "azure-search-documents"
-version = "11.6.0b8"
+version = "11.6.0b4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "azure-common" },
     { name = "azure-core" },
     { name = "isodate" },
-    { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/85/a0/47b9320e611d023e5d820f346c068cdcb2514ba1fd271881f7dae9c03aa4/azure_search_documents-11.6.0b8.tar.gz", hash = "sha256:5fa84bacbf72b9778ab7a2a43ab5df335fc5516eeb169c36d78ced39a29cfe69", size = 335046 }
+sdist = { url = "https://files.pythonhosted.org/packages/86/8b/1253b0694d54fe55edf8a18ee29af04247d1113b870c40ea95cf4fdb8176/azure-search-documents-11.6.0b4.tar.gz", hash = "sha256:b09fc3fa2813e83e7177874b352c84462fb86934d9f4299775361e1dfccc3f8f", size = 324608 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/22/7f/a160150cbeb4e4d1f434ae58d5d1ebb580b1c79e2d4b651be09fb3b7ab10/azure_search_documents-11.6.0b8-py3-none-any.whl", hash = "sha256:edd7af876dc9353d1ede46429547df0a3891beed182308636f0f86a97cce94b5", size = 335433 },
+    { url = "https://files.pythonhosted.org/packages/97/9c/4f1cd68cdedc014d7d157d86671c648b2983184e098fc659c27c9a5ccd60/azure_search_documents-11.6.0b4-py3-none-any.whl", hash = "sha256:9590392464f882762ce6bad03613c822d4423f09f311c275b833de25398c00c1", size = 325310 },
 ]
 
 [[package]]
@@ -739,7 +736,7 @@ wheels = [
 
 [[package]]
 name = "chainlit"
-version = "2.0.1"
+version = "2.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
@@ -765,9 +762,9 @@ dependencies = [
     { name = "uvicorn" },
     { name = "watchfiles" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e0/15/26dc5f957c6344813b2ae8c6f52cc820a7074088509ea947da0cf76ffc5f/chainlit-2.0.1.tar.gz", hash = "sha256:9fb7728aa5704e823c5b5d51f570dcfabafdcc97c23a73e6047f65eb72c938e7", size = 4637433 }
+sdist = { url = "https://files.pythonhosted.org/packages/42/33/c9a2060f499ef2c196405f80be9e03fa212e56307e0345fffacc5641fb03/chainlit-2.0.2.tar.gz", hash = "sha256:ec60a83884029dfa9e2f8215a81d99627c465407ac33ef37b19c7d515d9c0e7a", size = 4637820 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/99/c63fa2e1d7b949c034b7fc838a0c00de22cd2cec30245e379c9dd15dedfd/chainlit-2.0.1-py3-none-any.whl", hash = "sha256:84982902c6f42a91ac341ea9b6d52e6b1348e53a60ee49b4ffe0e5e5be02f4ba", size = 4703745 },
+    { url = "https://files.pythonhosted.org/packages/72/e4/563dbf1bc21dcda915d15ea27d739a8afff5ee861f40bc4adb67c33c56cd/chainlit-2.0.2-py3-none-any.whl", hash = "sha256:58fe3da65e892058a8e8ad97bb9dc4177173857d8c288a3de4a73271fc1b18be", size = 4704765 },
 ]
 
 [[package]]
@@ -1788,7 +1785,7 @@ wheels = [
 
 [[package]]
 name = "literalai"
-version = "0.0.623"
+version = "0.1.103"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "chevron" },
@@ -1796,7 +1793,7 @@ dependencies = [
     { name = "packaging" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/41/af/07d943e62a1297a7b44777297c0dca8f4bfcd6ae18b9df7d3cd9c1970e29/literalai-0.0.623.tar.gz", hash = "sha256:d65c04dde6b1e99d585e4112a607e5fd574d282b70f600c55a671018340dfb0f", size = 57081 }
+sdist = { url = "https://files.pythonhosted.org/packages/fc/fc/628b39e31b368aacbca51721ba7a66a4d140e9be916a0c7396664fdaed7a/literalai-0.1.103.tar.gz", hash = "sha256:060e86e63c0f53041a737b2183354ac092ee8cd9faec817dc95df639bb263a7d", size = 62540 }
 
 [[package]]
 name = "lxml"
@@ -1878,6 +1875,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/68/de/96cb6d3269bc994b4f5ede8ca7bf0840f5de0a278bc6e50cb317ff71cafa/lxml-5.3.0-pp310-pypy310_pp73-manylinux_2_28_aarch64.whl", hash = "sha256:8dc2c0395bea8254d8daebc76dcf8eb3a95ec2a46fa6fae5eaccee366bfe02ce", size = 4218377 },
     { url = "https://files.pythonhosted.org/packages/a5/43/19b1ef6cbffa4244a217f95cc5f41a6cb4720fed33510a49670b03c5f1a0/lxml-5.3.0-pp310-pypy310_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:6ba0d3dcac281aad8a0e5b14c7ed6f9fa89c8612b47939fc94f80b16e2e9bc83", size = 4351237 },
     { url = "https://files.pythonhosted.org/packages/ba/b2/6a22fb5c0885da3b00e116aee81f0b829ec9ac8f736cd414b4a09413fc7d/lxml-5.3.0-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:6e91cf736959057f7aac7adfc83481e03615a8e8dd5758aa1d95ea69e8931dba", size = 3487557 },
+]
+
+[[package]]
+name = "magentic-one-cli"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "autogen-agentchat" },
+    { name = "autogen-ext", extra = ["magentic-one", "openai"] },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/45/91/48e38247ba8702ea0ba3df005e1ea80d6f6d1b704919651554db063c5566/magentic_one_cli-0.2.0.tar.gz", hash = "sha256:fccf9549aa3e67ebe91e86ca28acdc51fe880543dd767b1bf9e5c7a9dcabbda1", size = 4107 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1d/f7/834064f03a8fe9774bd4a2d0499ed3f60e6713a0b1a5e3ac8d746dad8b5a/magentic_one_cli-0.2.0-py3-none-any.whl", hash = "sha256:829b9a8d5ebbca82ab355ad4574c9824ffba42394fba9005ffd2053d69408adc", size = 4409 },
 ]
 
 [[package]]
@@ -2725,6 +2735,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/2e/c8/e22c292035f1bac8b9f5237a2622305bc0304e776080b246f3df57c4ff9f/pre_commit-4.0.1.tar.gz", hash = "sha256:80905ac375958c0444c65e9cebebd948b3cdb518f335a091a670a89d652139d2", size = 191678 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/16/8f/496e10d51edd6671ebe0432e33ff800aa86775d2d147ce7d43389324a525/pre_commit-4.0.1-py2.py3-none-any.whl", hash = "sha256:efde913840816312445dc98787724647c65473daefe420785f885e8ed9a06878", size = 218713 },
+]
+
+[[package]]
+name = "promptflow-tracing"
+version = "1.17.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "openai" },
+    { name = "opentelemetry-sdk" },
+    { name = "tiktoken" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/c0/9b94affe4a635ab347770c8489acb0e8a190763eb83d10d1b6e317564e1c/promptflow_tracing-1.17.1-py3-none-any.whl", hash = "sha256:64deefccbea0a8115d71268597a775a73de7f4b5a2e69c7574cb4a62d8f6cba2", size = 26987 },
 ]
 
 [[package]]
