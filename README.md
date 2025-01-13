@@ -64,10 +64,10 @@ Copy the example environment file and update it with your settings:
 cp .env.example .env
 ```
 
-Then, you can run the application using the `chainlit` command:
+Then, you can run the application using the `agenticfleet` command:
 
 ```bash
-chainlit run src/app/app.py
+agenticfleet
 ```
 
 ### From Source
