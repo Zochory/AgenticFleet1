@@ -1,16 +1,22 @@
 import os
-import re
 import asyncio
+import aiohttp
 import json
-from typing import AsyncGenerator, List, Optional, Any, Dict
-
+from typing import AsyncGenerator, List, Optional, Any, Dict 
 import chainlit as cl
-from dotenv import load_dotenv
-from autogen_ext.models.openai import AzureOpenAIChatCompletionClient
+from autogen_ext.models.openai import OpenAIChatCompletionClient, AzureOpenAIChatCompletionClient
+from autogen_agentchat.teams import MagenticOneGroupChat 
 from autogen_ext.agents.web_surfer import MultimodalWebSurfer
+from autogen_core.models import ChatCompletionClient
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from autogen_ext.agents.file_surfer import FileSurfer
 from autogen_ext.agents.magentic_one import MagenticOneCoderAgent
-from autogen_agentchat.teams import MagenticOneGroupChat
+from autogen_ext.code_executors.local import LocalCommandLineCodeExecutor
+from autogen_ext.models.openai._openai_client import BaseOpenAIChatCompletionClient 
+from magentic_one_helper import MagenticOneHelper
+
+import re
+from dotenv import load_dotenv
 
 load_dotenv()
 

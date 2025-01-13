@@ -11,3 +11,15 @@
     display: none !important;
 }
 
+<<<<<<< HEAD
+=======
+body {
+    background-color: #3e0000;
+}
+.default-theme {
+    background-color: #ff1d1d;
+}
+.dark-theme {
+    background-color: #ff5151;
+}
+>>>>>>> 4ebdb664da197fe4f7607a8bde6b97381761e60d
