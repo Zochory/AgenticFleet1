@@ -243,8 +243,9 @@ class MagenticOneHelper:
                         "content": str(event)
                     }
             except Exception as e:
+                logging.error(f"Error processing event: {str(e)}")
                 yield {
                     "type": "error",
                     "source": "system",
-                    "content": f"Error processing event: {str(e)}"
+                    "content": "An internal error has occurred."
                 }

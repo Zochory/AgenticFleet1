@@ -356,7 +356,7 @@ async def run_task(task: str, background_tasks: BackgroundTasks) -> Dict[str, An
             "Error starting task",
             {"error": str(e)}
         )
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="An internal error has occurred.")
 
 
 if __name__ == "__main__":
