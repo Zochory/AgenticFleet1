@@ -21,7 +21,7 @@ az_model_client = AzureOpenAIChatCompletionClient(
     azure_deployment="gpt-4o-mini",
     model="gpt-4o-mini",
     api_version="2024-05-01-preview",
-    azure_endpoint="https://project-ai-production923121559830.openai.azure.com/",
+    azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'),
     api_key=os.getenv('AZURE_OPENAI_API_KEY')
 )
 #Create CogCache client
