@@ -2,6 +2,7 @@ import os
 import asyncio
 import aiohttp
 import json
+import pandas as pd
 from typing import AsyncGenerator, List, Optional, Any, Dict 
 import chainlit as cl
 from autogen_ext.models.openai import OpenAIChatCompletionClient, AzureOpenAIChatCompletionClient

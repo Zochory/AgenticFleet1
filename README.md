@@ -77,30 +77,45 @@ Mid-term Goals:
 
 ### From PyPI
 
+Recommanded : create a virtual environment using uv:
+
+```bash
+uv venv
+source .venv/bin/activate  # On Unix/macOS
+# or
+.venv\Scripts\activate  # On Windows
+``` 
+
+
+
 The simplest way to install AgenticFleet is via pip:
 
 ```bash
 pip install agentic-fleet
 ```
+Copy the example environment file and update it with your settings:
 
-Or with optional dependencies:
 ```bash
-# For development tools
-pip install "agentic-fleet[dev,test]"
+cp .env.example .env
+```
 
-# For documentation tools
-pip install "agentic-fleet[docs]"
+Then, you can run the application using the `chainlit` command:
+
+```bash
+chainlit run src/app/app.py
 ```
 
 ### From Source
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/qredence/agenticfleet.git
 cd agenticfleet
 ```
 
 2. Create and activate a virtual environment using uv:
+
 ```bash
 uv venv
 . .venv/bin/activate  # On Unix/macOS
@@ -111,26 +126,24 @@ uv venv
 3. Install dependencies:
 
 For basic installation:
+
 ```bash
-uv pip install -e .
+uv sync
+```
+
+Additional dependencies may be required for certain features. For example, to install Playwright dependencies:
+
+```bash
 sudo playwright install-deps
 sudo apt install -y nodejs npm
 npx playwright install-deps
 ```
 
-For development (includes testing, linting, and formatting tools):
-```bash
-uv pip install -e ".[dev,test]"
-```
-
-For documentation:
-```bash
-uv pip install -e ".[docs]"
-```
 
 4. Configure environment variables:
 
 Copy the example environment file and update it with your settings:
+
 ```bash
 cp .env.example .env
 ```
@@ -159,88 +172,9 @@ This will:
 - Provide colored logging output
 - Handle graceful shutdown
 
-## Project Structure
 
-```
-agenticfleet/
-├── src/
-│   ├── app/                  # Main application directory
-│   │   ├── .chainlit/       # Chainlit configuration
-│   │   ├── models/          # Data models
-│   │   ├── public/          # Static assets and styling
-│   │   ├── app.py          # Main Chainlit application
-│   │   ├── _app.py         # Alternative implementation
-│   │   └── chainlit.md     # Welcome documentation
-│   └── backend/            # Backend components (legacy)
-│       ├── agents/         # Agent implementations
-│       ├── models/         # Backend models
-│       └── main.py         # FastAPI application
-├── docs/                   # Documentation
-│   ├── agentic-fleet.md   # Technical documentation
-│   └── useful-snippet.md  # Code snippets and examples
-├── labs/                  # Experimental features
-│   ├── promptfleet/      # Prompt templates
-│   ├── promptwizard/     # Prompt optimization
-│   └── trace/            # Debugging tools
-└── README.md
-```
 
-## Development
 
-### Code Style and Quality
-
-The project uses several tools to maintain code quality:
-
-- **Black**: Code formatting
-  ```bash
-  black src/
-  ```
-
-- **isort**: Import sorting
-  ```bash
-  isort src/
-  ```
-
-- **flake8**: Code linting
-  ```bash
-  flake8 src/
-  ```
-
-- **mypy**: Static type checking
-  ```bash
-  mypy src/
-  ```
-
-### Testing
-
-Run tests with pytest:
-```bash
-pytest
-```
-
-Run tests with coverage report:
-```bash
-pytest --cov
-```
-
-## Error Handling
-
-The application implements comprehensive error handling:
-- Connection errors with automatic retry
-- Input validation errors
-- Server-side errors with proper status codes
-- User-friendly error messages in the UI
-- Agent-specific error handling and recovery
-
-## Logging
-
-Structured logging is implemented with:
-- Different log levels (DEBUG, INFO, WARNING, ERROR)
-- JSON-formatted log output
-- Timestamp and context information
-- Error tracking with stack traces
-- Agent activity monitoring
-- Performance metrics
 
 ## Contributing
 
