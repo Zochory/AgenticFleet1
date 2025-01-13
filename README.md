@@ -12,8 +12,9 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cf5bcfbdbf50493b9b5de381c24dc147)](https://app.codacy.com/gh/Qredence/AgenticFleet/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 AgenticFleet is an Adaptative Agentic System that leverages Chainlit for the frontend interface and FastAPI for the backend, built on the foundation of Autogen & Magentic-One.
+![image](https://github.com/user-attachments/assets/52cae89b-abee-42e3-9154-f04cc7da519e)
 
-![image](https://github.com/user-attachments/assets/2de0ec9d-d9f5-4003-9cdc-45128f0fb909)
+
 
 
 ## Quick Links
