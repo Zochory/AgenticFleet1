@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agentic-fleet"
-version = "0.4.12"
+version = "0.4.21"
 summary = "A multi-agent system for adaptive AI reasoning and automation"
 requires-python = ">=3.10"
 readme = { file = "README.md", content-type = "text/markdown" }
 description = "Adaptive Agentic AI Reasoning That Empower, Inform, and Integrate Seamlessly"
-urls.Homepage = "https://www.qredence.ai"
+urls.homepage = "https://www.qredence.ai"
 urls."Bug Tracker" = "https://github.com/Qredence/AgenticFleet/issues"
-urls.Documentation = "https://github.com/Qredence/AgenticFleet/tree/main/docs"
-urls."Source Code" = "https://github.com/Qredence/AgenticFleet"
+urls.documentation = "https://github.com/Qredence/AgenticFleet/tree/main/docs"
+urls."source code" = "https://github.com/Qredence/AgenticFleet"
 keywords = ["agentic", "autogen", "ai-agents", "agentic-ai", "machine-learning", "artificial-intelligence", "multi-agent", "ai", "qredence"]
 authors = [
   {name = "Zachary BENSALEM", email = "contact@zachary.ai"}
@@ -45,16 +45,16 @@ dependencies = [
     "requests>=2.32.3",
     "httpx>=0.25.0",
     "asyncio>=3.4.3",
-    "aiohttp==3.11.11",
+    "aiohttp>=3.11.11,<4.0.0",
     "python-multipart>=0.0.6",
 
     # AI & Machine Learning Stack
     "agentops>=0.3.21",
     "autogen-agentchat==0.4.0",
     "autogen-core==0.4.0",
-    "autogen-ext[openai,azure]==0.4.0",
-    "autogen-ext[docker]==0.4.0",
-    "autogen-ext[magentic-one]==0.4.0",
+    "autogen-ext[openai,azure]>=0.4.0,<0.5.0",
+    "autogen-ext[docker]>=0.4.0,<0.5.0",
+    "autogen-ext[magentic-one]>=0.4.0,<0.5.0",
     "magentic-one-cli==0.2.0",
     "composio-core>=0.6.11.post1",
 
@@ -78,12 +78,12 @@ dependencies = [
     "bing>=0.31",
     "markitdown>=0.0.1a3",
     "beautifulsoup4>=4.12.0",
-    "playwright==1.49.1",
+    "playwright>=1.49.1,<2.0.0",
     "tenacity>=9.0.0",
     "opentelemetry-instrumentation-fastapi>=0.44b0",
     "chainlit==2.0.2",
     "docker>=7.1.0",
-    "promptflow-tracing==1.17.1",
+    "promptflow-tracing>=1.17.1,<2.0.0",
     "rich>=13.9.4",
     "aioconsole>=0.8.1",
 ]
@@ -119,7 +119,7 @@ packages = ["src"]
 allow-direct-references = true
 
 [project.scripts]
-agenticfleet = "src.frontend.app:main"
+agenticfleet = "scripts.run:main"
 
 [tool.hatch.build]
 artifacts = [
