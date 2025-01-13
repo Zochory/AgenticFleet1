@@ -12,7 +12,11 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cf5bcfbdbf50493b9b5de381c24dc147)](https://app.codacy.com/gh/Qredence/AgenticFleet/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 AgenticFleet is an Adaptative Agentic System that leverages Chainlit for the frontend interface and FastAPI for the backend, built on the foundation of Autogen & Magentic-One.
-![image](https://github.com/user-attachments/assets/52cae89b-abee-42e3-9154-f04cc7da519e)
+
+
+
+https://github.com/user-attachments/assets/e36b215a-4fac-4b2a-95e2-90ce7701f277
+
 
 
 
@@ -275,3 +279,7 @@ For more information about Autogen, visit their [documentation](https://microsof
 ## License
 
 This project is licensed under the [Apache 2.0 License](LICENSE).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Qredence/AgenticFleet&type=Date)](https://star-history.com/#Qredence/AgenticFleet&Date) 
