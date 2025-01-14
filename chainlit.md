@@ -1,13 +1,13 @@
-# Welcome to Chainlit! 🚀🤖
+# Welcome to AgenticFleet! 🚀🤖
 
-Hi there, Developer! 👋 We're excited to have you on board. Chainlit is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs.
+Hi there, Developer! 👋 We're excited to have you on board. AgenticFleet is a powerful tool designed to help you prototype, debug, and share applications built on top of LLMs. It is developed by Qredence, a company specializing in AI and software solutions.
 
 ## Useful Links 🔗
 
-- **Documentation:** Get started with our comprehensive [Chainlit Documentation](https://docs.chainlit.io) 📚
-- **Discord Community:** Join our friendly [Chainlit Discord](https://discord.gg/k73SQ3FyUh) to ask questions, share your projects, and connect with other developers! 💬
+- **GitHub Repository:** Explore the codebase and contribute to the project on [GitHub](https://www.github.com/Qredence/AgenticFleet) 💻
+- **Qredence Website:** Learn more about Qredence and their offerings at [https://www.qredence.ai](https://www.qredence.ai) 🌐
 
-We can't wait to see what you create with Chainlit! Happy coding! 💻😊
+We can't wait to see what you create with AgenticFleet! Happy coding! 💻😊
 
 ## Welcome screen
 
