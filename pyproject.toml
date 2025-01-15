@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agentic-fleet"
-version = "0.4.22"
+version = "0.4.3"
 summary = "A multi-agent system for adaptive AI reasoning and automation"
 requires-python = ">=3.10"
 readme = { file = "README.md", content-type = "text/markdown" }
@@ -20,72 +20,73 @@ authors = [
 license = {file = "LICENSE"}
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Intended Audience :: Developers",
-  "Intended Audience :: Science/Research",
   "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Topic :: Scientific/Engineering :: Artificial Intelligence",
-  "Topic :: Software Development :: Libraries :: Python Modules"
+
 ]
 
 dependencies = [
-    # Core Dependencies
+    # Core Framework
     "fastapi>=0.109.0",
     "uvicorn>=0.24.0",
-    "python-dotenv>=1.0.1",
-    "pydantic-settings>=2.2.1",
     "pydantic>=2.5.2",
+    "pydantic-settings>=2.2.1",
+    "python-dotenv>=1.0.1",
     "typing-extensions>=4.8.0",
-
-    # Async and HTTP
-    "aiofiles>=23.1.0,<24.0.0",
-    "requests>=2.32.3",
-    "httpx>=0.25.0",
-    "asyncio>=3.4.3",
+    "packaging>=23.2",
+    # Networking & Async
     "aiohttp>=3.11.11,<4.0.0",
+    "httpx>=0.25.0",
+    "requests>=2.32.3",
+    "aiofiles>=23.1.0,<24.0.0",
     "python-multipart>=0.0.6",
-
-    # AI & Machine Learning Stack
-    "agentops>=0.3.21",
-    "autogen-agentchat==0.4.0",
-    "autogen-core==0.4.0",
-    "autogen-ext[openai,azure]>=0.4.0,<0.5.0",
-    "autogen-ext[docker]>=0.4.0,<0.5.0",
-    "autogen-ext[magentic-one]>=0.4.0,<0.5.0",
+    "asyncio>=3.4.3",
+    # AI/ML Infrastructure
+    "autogen-core==0.4.1",
+    "autogen-agentchat==0.4.1",
+    "autogen-ext[openai,azure]>=0.4.1,<0.5.0",
+    "autogen-ext[docker]>=0.4.1,<0.5.0",
+    "autogen-ext[magentic-one]>=0.4.1,<0.5.0",
+    "autogen-ext[web-surfer]>=0.4.1,<0.5.0",
+    "autogen-magentic-one>=0.0.1",
     "magentic-one-cli==0.2.0",
+    "agentops>=0.3.21",
+    "promptflow-tracing==1.17.1",
     "composio-core>=0.6.11.post1",
-
-    # Azure Cloud Integration
+    # Azure Services
     "azure-core>=1.32.0",
     "azure-identity>=1.19.0",
     "azure-keyvault-secrets>=4.9.0",
     "azure-search-documents==11.6.0b4",
     "azure-storage-blob>=12.24.0",
     "azure-cosmos>=4.9.0",
-
-    # Data Science & Analytics
-    "matplotlib>=3.10.0",
-    "numpy>=1.26,<2.0",
+    # Data Processing
     "pandas>=2.2.3",
-    "pytz>=2024.2",
+    "numpy>=1.26,<2.0",
+    "matplotlib>=3.10.0",
     "yfinance>=0.2.51",
     "jsonlines>=4.0.0",
-    
-    # Web Services & Utilities
+    "pytz>=2024.2",
+    # Web & Utilities
+    "chainlit==2.0.3",
+    "playwright>=1.49.1,<2.0.0",
+    "beautifulsoup4>=4.12.0",
     "bing>=0.31",
     "markitdown>=0.0.1a3",
-    "beautifulsoup4>=4.12.0",
-    "playwright>=1.49.1,<2.0.0",
     "tenacity>=9.0.0",
-    "opentelemetry-instrumentation-fastapi>=0.44b0",
-    "chainlit==2.0.2",
     "docker>=7.1.0",
-    "promptflow-tracing>=1.17.1,<2.0.0",
+    "opentelemetry-instrumentation-fastapi>=0.44b0",
+    # Developer Tools
     "rich>=13.9.4",
     "aioconsole>=0.8.1",
+    "grpcio-tools~=1.62.0",
+    "typer>=0.15.1",
+    "ruff==0.4.8",
+    "azure-ai-projects>=1.0.0b4",
+    "azure-ai-inference>=1.0.0b6",
 ]
 
 [project.optional-dependencies]
@@ -119,7 +120,7 @@ packages = ["src"]
 allow-direct-references = true
 
 [project.scripts]
-agenticfleet = "scripts.run:main"
+agenticfleet = "scripts.run:cli"
 
 [tool.hatch.build]
 artifacts = [
