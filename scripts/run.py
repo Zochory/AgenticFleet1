@@ -25,11 +25,11 @@ def run_app(no_oauth: bool):
     # Load .env from project root
     env_path = Path(__file__).parent.parent / '.env'
     load_dotenv(env_path)
-    
+
     app_path = os.path.join(os.path.dirname(__file__), "..", "src", "app", "app.py")
-    
+
     cmd = ["chainlit", "run", app_path, "--port", "8001"]
-    
+
     if no_oauth:
         # Only disable OAuth-specific variables
         oauth_vars = [
@@ -43,7 +43,7 @@ def run_app(no_oauth: bool):
             if var in os.environ:
                 del os.environ[var]
         os.environ["DISABLE_OAUTH"] = "1"
-    
+
     subprocess.run(cmd, check=True)
 
 if __name__ == "__main__":
