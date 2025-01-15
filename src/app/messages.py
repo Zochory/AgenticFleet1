@@ -1,79 +1,136 @@
-"""
-Message models and types for agent communication.
+"""Message models and types for agent communication.
 
-This module defines the message types used for communication between agents,
+This module defines strongly-typed message models for agent communication,
 including structured responses, plans, thoughts, and errors.
+
+Example:
+    ```python
+    from messages import create_message
+    
+    # Create an agent message
+    msg = create_message(
+        message_type="agent",
+        content="Task completed successfully",
+        source="WebSurfer",
+        target="Coder"
+    )
+    ```
 """
 
-from typing import Dict, Any, Optional, List, Union
+from typing import Dict, Any, Optional, List, Union, Literal
 from datetime import datetime, timezone
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
+
+MessageType = Literal["agent", "plan", "thought", "dialog", "code", "error"]
 
 class BaseMessage(BaseModel):
-    """Base class for all message types."""
+    """Base class for all message types with common fields."""
     content: str = Field(..., description="The main content of the message")
     timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Additional metadata")
+    message_type: MessageType = Field(..., description="Type of message")
+
+    @validator('timestamp')
+    def validate_timestamp(cls, v: str) -> str:
+        """Ensure timestamp is in ISO format."""
+        try:
+            datetime.fromisoformat(v)
+            return v
+        except ValueError:
+            raise ValueError("Timestamp must be in ISO format")
 
 class AgentMessage(BaseMessage):
-    """Message from an agent."""
+    """Message from an agent with source and target information."""
     source: str = Field(..., description="The agent that created this message")
     target: Optional[str] = Field(default=None, description="The intended recipient agent")
-    message_type: str = Field(default="text", description="Type of message (text, code, error, etc)")
+    priority: Optional[int] = Field(default=0, ge=0, le=10, description="Message priority (0-10)")
 
 class PlanMessage(BaseMessage):
-    """Structured plan for task execution."""
-    title: str = Field(..., description="Title of the plan")
-    description: str = Field(..., description="Detailed description of what will be done")
-    steps: List[str] = Field(..., description="Ordered list of steps to execute")
+    """Structured plan for task execution with steps and timing."""
+    title: str = Field(..., min_length=1, description="Title of the plan")
+    description: str = Field(..., min_length=10, description="Detailed description of what will be done")
+    steps: List[str] = Field(..., min_items=1, description="Ordered list of steps to execute")
     estimated_time: Optional[str] = Field(default=None, description="Estimated time to complete")
-    dependencies: Optional[List[str]] = Field(default=None, description="Required dependencies or prerequisites")
+    dependencies: Optional[List[str]] = Field(default_factory=list, description="Required dependencies")
+    status: str = Field(default="pending", description="Current status of the plan")
+    
+    @validator('steps')
+    def validate_steps(cls, v: List[str]) -> List[str]:
+        """Ensure steps are not empty strings."""
+        if any(not step.strip() for step in v):
+            raise ValueError("Steps cannot be empty strings")
+        return v
 
 class ThoughtMessage(BaseMessage):
-    """Internal reasoning and thought process."""
-    reasoning: str = Field(..., description="The reasoning or thought process")
+    """Internal reasoning and thought process with confidence metrics."""
+    reasoning: str = Field(..., min_length=10, description="The reasoning or thought process")
     observations: List[str] = Field(..., description="List of relevant observations")
     next_steps: List[str] = Field(..., description="Planned next steps")
-    confidence: Optional[float] = Field(default=None, description="Confidence level in the reasoning")
+    confidence: Optional[float] = Field(
+        default=None, ge=0.0, le=1.0,
+        description="Confidence level in the reasoning (0.0-1.0)"
+    )
+    
+    @validator('confidence')
+    def validate_confidence(cls, v: Optional[float]) -> Optional[float]:
+        """Validate confidence is between 0 and 1."""
+        if v is not None and not 0 <= v <= 1:
+            raise ValueError("Confidence must be between 0 and 1")
+        return v
 
 class DialogMessage(BaseMessage):
-    """Conversational message or dialog."""
-    speaker: str = Field(..., description="The speaker/source of the dialog")
-    utterance: str = Field(..., description="The actual spoken/written content")
+    """Conversational message with context and emotion tracking."""
+    speaker: str = Field(..., min_length=1, description="The speaker/source of the dialog")
+    utterance: str = Field(..., min_length=1, description="The actual spoken/written content")
     context: Optional[str] = Field(default=None, description="Context of the conversation")
-    emotion: Optional[str] = Field(default=None, description="Emotional tone of the message")
+    emotion: Optional[str] = Field(
+        default=None,
+        description="Emotional tone of the message",
+        regex="^(neutral|happy|sad|angry|confused|surprised)$"
+    )
+    timestamp: str = Field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat(),
+        description="When the dialog occurred"
+    )
 
 class CodeMessage(BaseMessage):
-    """Code-related message."""
-    language: str = Field(..., description="Programming language of the code")
-    code: str = Field(..., description="The actual code content")
+    """Code-related message with language and execution context."""
+    language: str = Field(..., regex="^[a-zA-Z0-9+#]+$", description="Programming language")
+    code: str = Field(..., min_length=1, description="The actual code content")
     explanation: Optional[str] = Field(default=None, description="Explanation of the code")
     file_path: Optional[str] = Field(default=None, description="Related file path")
+    version: Optional[str] = Field(default=None, description="Version or commit reference")
+    requires_execution: bool = Field(default=False, description="Whether code needs to be run")
 
 class ErrorMessage(BaseMessage):
-    """Error or exception message."""
+    """Detailed error message with severity and resolution hints."""
     error_type: str = Field(..., description="Type or category of error")
-    message: str = Field(..., description="Error message or description")
-    details: Optional[Dict[str, Any]] = Field(default=None, description="Additional error details")
+    message: str = Field(..., min_length=1, description="Error message or description")
+    details: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Error details")
     traceback: Optional[str] = Field(default=None, description="Error traceback if available")
+    severity: str = Field(
+        default="error",
+        regex="^(debug|info|warning|error|critical)$",
+        description="Error severity level"
+    )
+    resolution_hints: Optional[List[str]] = Field(
+        default_factory=list,
+        description="Suggested steps to resolve the error"
+    )
 
-# Type alias for any message type
-AnyMessage = Union[
-    AgentMessage,
-    PlanMessage,
-    ThoughtMessage,
-    DialogMessage,
-    CodeMessage,
-    ErrorMessage
-]
+# Message type definitions
+AnyMessage = Union[AgentMessage, PlanMessage, ThoughtMessage, DialogMessage, CodeMessage, ErrorMessage]
+MESSAGE_CLASSES: Dict[str, type] = {
+    "agent": AgentMessage,
+    "plan": PlanMessage,
+    "thought": ThoughtMessage,
+    "dialog": DialogMessage,
+    "code": CodeMessage,
+    "error": ErrorMessage
+}
 
-def create_message(
-    message_type: str,
-    content: str,
-    **kwargs: Any
-) -> AnyMessage:
-    """
-    Factory function to create a message of the specified type.
+def create_message(message_type: MessageType, content: str, **kwargs: Any) -> AnyMessage:
+    """Create a strongly-typed message instance.
     
     Args:
         message_type: Type of message to create
@@ -84,18 +141,25 @@ def create_message(
         An instance of the appropriate message class
     
     Raises:
-        ValueError: If message_type is not recognized
+        ValueError: If message_type is not recognized or validation fails
+        
+    Example:
+        ```python
+        error_msg = create_message(
+            message_type="error",
+            content="Failed to process request",
+            error_type="ValidationError",
+            severity="critical"
+        )
+        ```
     """
-    message_classes = {
-        "agent": AgentMessage,
-        "plan": PlanMessage,
-        "thought": ThoughtMessage,
-        "dialog": DialogMessage,
-        "code": CodeMessage,
-        "error": ErrorMessage
-    }
-    
-    if message_type not in message_classes:
+    if message_type not in MESSAGE_CLASSES:
         raise ValueError(f"Unknown message type: {message_type}")
     
-    return message_classes[message_type](content=content, **kwargs) 
+    # Ensure message_type is included in kwargs
+    kwargs['message_type'] = message_type
+    
+    try:
+        return MESSAGE_CLASSES[message_type](content=content, **kwargs)
+    except Exception as e:
+        raise ValueError(f"Failed to create {message_type} message: {str(e)}")

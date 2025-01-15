@@ -36,13 +36,14 @@ https://github.com/user-attachments/assets/e36b215a-4fac-4b2a-95e2-90ce7701f277
 - Comprehensive error handling and connection management
 - Environment-based configuration
 - Extensible architecture for future enhancements
+- OAuth support with ability to run with or without authentication
 
 
 ## Installation
 
 ### From PyPI
 
-Recommanded : create a virtual environment using uv:
+Recommended: create a virtual environment using uv:
 
 ```bash
 uv venv
@@ -51,24 +52,34 @@ source .venv/bin/activate  # On Unix/macOS
 .venv\Scripts\activate  # On Windows
 ``` 
 
-
-
 The simplest way to install AgenticFleet is via pip:
 
 ```bash
-pip install agentic-fleet
+pip install agentic-fleet # uv install agentic-fleet   
 ```
+
 Copy the example environment file and update it with your settings:
 
 ```bash
 cp .env.example .env
 ```
 
-Then, you can run the application using the `agenticfleet` command:
+Install Playwright dependencies:
 
 ```bash
-agenticfleet
+playwright install --with-deps chromium
 ```
+
+Then, you can run the application using one of these commands:
+
+```bash
+agenticfleet start      # Start with OAuth authentication enabled
+agenticfleet no-oauth   # Start without OAuth authentication
+```
+
+The application will be available at http://localhost:8001
+
+
 
 ### From Source
 
