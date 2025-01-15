@@ -87,6 +87,7 @@ dependencies = [
     "ruff==0.4.8",
     "azure-ai-projects>=1.0.0b4",
     "azure-ai-inference>=1.0.0b6",
+    "puremagic>=1.28",
 ]
 
 [project.optional-dependencies]
