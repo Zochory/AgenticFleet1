@@ -64,3 +64,14 @@ def start(no_oauth: bool, port: int, host: str):
     except KeyboardInterrupt:
         click.echo("\nShutting down...")
         sys.exit(0)
+
+def main():
+    """Main entry point for the CLI."""
+    try:
+        cli()
+    except Exception as e:
+        click.echo(f"Error: {str(e)}", err=True)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
